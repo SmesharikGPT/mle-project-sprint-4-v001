@@ -1,3 +1,9 @@
+# Данные и обученные модели хранятся локально и в S3.
+data/
+models/
+.env
+.venv/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

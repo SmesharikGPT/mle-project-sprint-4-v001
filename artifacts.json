@@ -1,0 +1,92 @@
+{
+  "checked_at_utc": "2026-10-27T08:58:05.466327+00:00",
+  "train_end_exclusive": "2022-12-16",
+  "k": 20,
+  "prepared_roundtrip_sha256": {
+    "items": "672a0c9c273617c59688065eb7f8ad7572c75593138d057c09909db4e8e10594",
+    "events": "9ea3df17e3274edfb291b81cbca00cea8550ef91a82b238b1ae5191ab87ee86a"
+  },
+  "artifacts": [
+    {
+      "key": "recsys/data/items.parquet",
+      "rows": 1000000,
+      "bytes": 72276417,
+      "columns": [
+        "item_id",
+        "albums",
+        "artists",
+        "genres",
+        "name",
+        "artists_missing",
+        "artists_unknown",
+        "artist_names",
+        "albums_missing",
+        "albums_unknown",
+        "album_names",
+        "genres_missing",
+        "genres_unknown",
+        "genre_names"
+      ],
+      "sha256": "672a0c9c273617c59688065eb7f8ad7572c75593138d057c09909db4e8e10594"
+    },
+    {
+      "key": "recsys/data/events.parquet",
+      "rows": 222629898,
+      "bytes": 1511484399,
+      "columns": [
+        "user_id",
+        "item_id",
+        "track_seq",
+        "started_at"
+      ],
+      "sha256": "9ea3df17e3274edfb291b81cbca00cea8550ef91a82b238b1ae5191ab87ee86a"
+    },
+    {
+      "key": "recsys/recommendations/top_popular.parquet",
+      "rows": 1000,
+      "bytes": 14493,
+      "columns": [
+        "item_id",
+        "score",
+        "rank"
+      ],
+      "sha256": "6ae68c0fba27978af4d11c81024379d510e7778fbfac8bb5cc934384dfc33139"
+    },
+    {
+      "key": "recsys/recommendations/personal_als.parquet",
+      "rows": 68661050,
+      "bytes": 525599692,
+      "columns": [
+        "user_id",
+        "item_id",
+        "score",
+        "rank"
+      ],
+      "sha256": "0181bf5af8aaf2e9e90bf7e023dc88fde24a227fb977f97f322ab4e04c643f37"
+    },
+    {
+      "key": "recsys/recommendations/similar.parquet",
+      "rows": 9996950,
+      "bytes": 97384746,
+      "columns": [
+        "item_id_1",
+        "item_id_2",
+        "score",
+        "rank"
+      ],
+      "sha256": "4307e413137ea85aa388caa773eb57886a9af878c4cdd4a3089da8645d4049e8"
+    },
+    {
+      "key": "recsys/recommendations/recommendations.parquet",
+      "rows": 27464420,
+      "bytes": 194671310,
+      "columns": [
+        "user_id",
+        "item_id",
+        "score",
+        "rank"
+      ],
+      "sha256": "9c2f70f3f35b8f5a283e2fb71030dfc2863763ed78a420bb2df3a41da6beceae"
+    }
+  ]
+}

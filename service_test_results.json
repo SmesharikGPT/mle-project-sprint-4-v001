@@ -1,0 +1,193 @@
+{
+  "started_at_utc": "2026-10-27T08:54:53.071643+00:00",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "health",
+      "method": "GET",
+      "path": "/health",
+      "passed": true,
+      "latency_ms": 23.36,
+      "status_code": 200,
+      "response": {
+        "status": "healthy"
+      }
+    },
+    {
+      "name": "stats_before",
+      "method": "GET",
+      "path": "/stats",
+      "passed": true,
+      "latency_ms": 2.12,
+      "status_code": 200,
+      "response": {
+        "personal": 0,
+        "popular": 0,
+        "similar": 0,
+        "errors": 0
+      }
+    },
+    {
+      "name": "personal",
+      "method": "POST",
+      "path": "/recommendations",
+      "passed": true,
+      "parameters": {
+        "user_id": 0,
+        "k": 20
+      },
+      "latency_ms": 49.77,
+      "status_code": 200,
+      "response": {
+        "recs": [
+          9980494,
+          9439513,
+          2198468,
+          4309269,
+          19895979,
+          14697223,
+          14734036,
+          4785077,
+          14358525,
+          16440228,
+          1815809,
+          25030086,
+          24279093,
+          10327927,
+          22436566,
+          108410,
+          4191606,
+          4191608,
+          16321483,
+          17326708
+        ]
+      }
+    },
+    {
+      "name": "cold_user",
+      "method": "POST",
+      "path": "/recommendations",
+      "passed": true,
+      "parameters": {
+        "user_id": 1374583,
+        "k": 20
+      },
+      "latency_ms": 31.16,
+      "status_code": 200,
+      "response": {
+        "recs": [
+          53404,
+          33311009,
+          178529,
+          35505245,
+          24692821,
+          795836,
+          6705392,
+          32947997,
+          37384,
+          45499814,
+          51241318,
+          29544272,
+          39257277,
+          2758009,
+          65851540,
+          328683,
+          60292250,
+          17079396,
+          47627256,
+          51516485
+        ]
+      }
+    },
+    {
+      "name": "similar",
+      "method": "POST",
+      "path": "/similar_items",
+      "passed": true,
+      "parameters": {
+        "item_id": 26,
+        "k": 10
+      },
+      "latency_ms": 37.64,
+      "status_code": 200,
+      "response": {
+        "recs": [
+          20111365,
+          4850799,
+          22836932,
+          21846409,
+          21644998,
+          15673308,
+          13683192,
+          534679,
+          17900821,
+          20034028
+        ]
+      }
+    },
+    {
+      "name": "unknown_track",
+      "method": "POST",
+      "path": "/similar_items",
+      "passed": true,
+      "parameters": {
+        "item_id": 101521820,
+        "k": 10
+      },
+      "latency_ms": 18.51,
+      "status_code": 200,
+      "response": {
+        "recs": []
+      }
+    },
+    {
+      "name": "invalid_k",
+      "method": "POST",
+      "path": "/recommendations",
+      "passed": true,
+      "parameters": {
+        "user_id": 0,
+        "k": 0
+      },
+      "latency_ms": 1.91,
+      "status_code": 422,
+      "response": {
+        "detail": [
+          {
+            "type": "greater_than_equal",
+            "loc": [
+              "query",
+              "k"
+            ],
+            "msg": "Input should be greater than or equal to 1",
+            "input": "0",
+            "ctx": {
+              "ge": 1
+            },
+            "url": "https://errors.pydantic.dev/2.14/v/greater_than_equal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "stats_after",
+      "method": "GET",
+      "path": "/stats",
+      "passed": true,
+      "latency_ms": 1.64,
+      "status_code": 200,
+      "response": {
+        "personal": 1,
+        "popular": 1,
+        "similar": 2,
+        "errors": 0
+      }
+    }
+  ],
+  "examples": {
+    "user_id": 0,
+    "cold_user_id": 1374583,
+    "item_id": 26,
+    "unknown_item_id": 101521820
+  }
+}
