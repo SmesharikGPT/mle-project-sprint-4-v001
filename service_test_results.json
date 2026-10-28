@@ -1,70 +1,64 @@
 {
-  "started_at_utc": "2026-10-27T08:54:53.071643+00:00",
+  "started_at_utc": "2026-10-28T18:16:05.654603+00:00",
   "status": "passed",
   "checks": [
     {
-      "name": "health",
+      "name": "Проверка готовности",
       "method": "GET",
       "path": "/health",
       "passed": true,
-      "latency_ms": 23.36,
+      "latency_ms": 26.7,
       "status_code": 200,
       "response": {
         "status": "healthy"
       }
     },
     {
-      "name": "stats_before",
+      "name": "Счётчики до проверки",
       "method": "GET",
       "path": "/stats",
       "passed": true,
-      "latency_ms": 2.12,
+      "latency_ms": 1.53,
       "status_code": 200,
       "response": {
         "personal": 0,
         "popular": 0,
+        "online": 0,
         "similar": 0,
+        "events": 0,
         "errors": 0
       }
     },
     {
-      "name": "personal",
-      "method": "POST",
-      "path": "/recommendations",
+      "name": "Очистка тестовой истории",
+      "method": "DELETE",
+      "path": "/events",
       "passed": true,
       "parameters": {
-        "user_id": 0,
-        "k": 20
+        "user_id": 0
       },
-      "latency_ms": 49.77,
+      "latency_ms": 1.48,
       "status_code": 200,
       "response": {
-        "recs": [
-          9980494,
-          9439513,
-          2198468,
-          4309269,
-          19895979,
-          14697223,
-          14734036,
-          4785077,
-          14358525,
-          16440228,
-          1815809,
-          25030086,
-          24279093,
-          10327927,
-          22436566,
-          108410,
-          4191606,
-          4191608,
-          16321483,
-          17326708
-        ]
+        "status": "ok"
       }
     },
     {
-      "name": "cold_user",
+      "name": "Очистка тестовой истории",
+      "method": "DELETE",
+      "path": "/events",
+      "passed": true,
+      "parameters": {
+        "user_id": 1374583
+      },
+      "latency_ms": 1.35,
+      "status_code": 200,
+      "response": {
+        "status": "ok"
+      }
+    },
+    {
+      "name": "1. Пользователь без персональных рекомендаций",
       "method": "POST",
       "path": "/recommendations",
       "passed": true,
@@ -72,7 +66,7 @@
         "user_id": 1374583,
         "k": 20
       },
-      "latency_ms": 31.16,
+      "latency_ms": 27.94,
       "status_code": 200,
       "response": {
         "recs": [
@@ -100,7 +94,57 @@
       }
     },
     {
-      "name": "similar",
+      "name": "Пустая online-история",
+      "method": "GET",
+      "path": "/events",
+      "passed": true,
+      "parameters": {
+        "user_id": 0
+      },
+      "latency_ms": 1.43,
+      "status_code": 200,
+      "response": {
+        "events": []
+      }
+    },
+    {
+      "name": "2. Персональные рекомендации без online-истории",
+      "method": "POST",
+      "path": "/recommendations",
+      "passed": true,
+      "parameters": {
+        "user_id": 0,
+        "k": 20
+      },
+      "latency_ms": 45.53,
+      "status_code": 200,
+      "response": {
+        "recs": [
+          9980494,
+          9439513,
+          2198468,
+          4309269,
+          19895979,
+          14697223,
+          14734036,
+          4785077,
+          14358525,
+          16440228,
+          1815809,
+          25030086,
+          24279093,
+          10327927,
+          22436566,
+          108410,
+          4191606,
+          4191608,
+          16321483,
+          17326708
+        ]
+      }
+    },
+    {
+      "name": "Похожие треки",
       "method": "POST",
       "path": "/similar_items",
       "passed": true,
@@ -108,7 +152,7 @@
         "item_id": 26,
         "k": 10
       },
-      "latency_ms": 37.64,
+      "latency_ms": 32.45,
       "status_code": 200,
       "response": {
         "recs": [
@@ -126,7 +170,7 @@
       }
     },
     {
-      "name": "unknown_track",
+      "name": "Неизвестный трек",
       "method": "POST",
       "path": "/similar_items",
       "passed": true,
@@ -134,14 +178,81 @@
         "item_id": 101521820,
         "k": 10
       },
-      "latency_ms": 18.51,
+      "latency_ms": 18.95,
       "status_code": 200,
       "response": {
         "recs": []
       }
     },
     {
-      "name": "invalid_k",
+      "name": "Добавление нового прослушивания",
+      "method": "POST",
+      "path": "/events",
+      "passed": true,
+      "parameters": {
+        "user_id": 0,
+        "item_id": 26
+      },
+      "latency_ms": 1.37,
+      "status_code": 200,
+      "response": {
+        "status": "ok"
+      }
+    },
+    {
+      "name": "История после прослушивания",
+      "method": "GET",
+      "path": "/events",
+      "passed": true,
+      "parameters": {
+        "user_id": 0
+      },
+      "latency_ms": 1.1,
+      "status_code": 200,
+      "response": {
+        "events": [
+          26
+        ]
+      }
+    },
+    {
+      "name": "3. Персональные рекомендации с online-историей",
+      "method": "POST",
+      "path": "/recommendations",
+      "passed": true,
+      "parameters": {
+        "user_id": 0,
+        "k": 20
+      },
+      "latency_ms": 69.76,
+      "status_code": 200,
+      "response": {
+        "recs": [
+          20111365,
+          9980494,
+          4850799,
+          9439513,
+          22836932,
+          2198468,
+          21846409,
+          4309269,
+          21644998,
+          19895979,
+          15673308,
+          14697223,
+          13683192,
+          14734036,
+          534679,
+          4785077,
+          17900821,
+          14358525,
+          20034028,
+          16440228
+        ]
+      }
+    },
+    {
+      "name": "Неверный размер выдачи",
       "method": "POST",
       "path": "/recommendations",
       "passed": true,
@@ -149,7 +260,7 @@
         "user_id": 0,
         "k": 0
       },
-      "latency_ms": 1.91,
+      "latency_ms": 1.32,
       "status_code": 422,
       "response": {
         "detail": [
@@ -170,16 +281,82 @@
       }
     },
     {
-      "name": "stats_after",
+      "name": "Удаление тестовой истории",
+      "method": "DELETE",
+      "path": "/events",
+      "passed": true,
+      "parameters": {
+        "user_id": 0
+      },
+      "latency_ms": 1.11,
+      "status_code": 200,
+      "response": {
+        "status": "ok"
+      }
+    },
+    {
+      "name": "Удаление тестовой истории",
+      "method": "DELETE",
+      "path": "/events",
+      "passed": true,
+      "parameters": {
+        "user_id": 1374583
+      },
+      "latency_ms": 1.0,
+      "status_code": 200,
+      "response": {
+        "status": "ok"
+      }
+    },
+    {
+      "name": "Возврат к offline после очистки истории",
+      "method": "POST",
+      "path": "/recommendations",
+      "passed": true,
+      "parameters": {
+        "user_id": 0,
+        "k": 20
+      },
+      "latency_ms": 40.16,
+      "status_code": 200,
+      "response": {
+        "recs": [
+          9980494,
+          9439513,
+          2198468,
+          4309269,
+          19895979,
+          14697223,
+          14734036,
+          4785077,
+          14358525,
+          16440228,
+          1815809,
+          25030086,
+          24279093,
+          10327927,
+          22436566,
+          108410,
+          4191606,
+          4191608,
+          16321483,
+          17326708
+        ]
+      }
+    },
+    {
+      "name": "Счётчики после проверки",
       "method": "GET",
       "path": "/stats",
       "passed": true,
-      "latency_ms": 1.64,
+      "latency_ms": 1.27,
       "status_code": 200,
       "response": {
-        "personal": 1,
+        "personal": 3,
         "popular": 1,
+        "online": 1,
         "similar": 2,
+        "events": 1,
         "errors": 0
       }
     }
@@ -187,7 +364,7 @@
   "examples": {
     "user_id": 0,
     "cold_user_id": 1374583,
-    "item_id": 26,
-    "unknown_item_id": 101521820
+    "history_item_id": 26,
+    "new_online_item_id": 20111365
   }
 }
